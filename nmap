@@ -1,0 +1,40 @@
+nmap
+nmap 192.168.204.130
+nmap 192.168.204.130 -sS
+nmap 192.168.204.130 -sT
+nmap 192.168.204.130 -sn
+nmap 192.168.204.130 -sS -Pn
+nmap 192.168.204.130 -sS -Pn -p 80,443
+nmap 192.168.204.130 -sS -Pn -p http,https
+nmap 192.168.204.130 -sS -Pn -p-
+nmap 192.168.204.130 -sS -Pn --top-ports 100
+nmap 192.168.204.130 -sS -Pn -p http,https --open
+nmap 192.168.204.130 -sS -Pn -p http,https --open --reason
+nmap 192.168.204.130 -sV -Pn -p http,https
+nmap 192.168.204.130 -sV -Pn -O
+
+Some HTTP related scripts:
+dns-brute
+dns-zone-transfer
+whois-domain
+whois-ip
+ssl-heartbleed
+http-userdir-enum
+http-security-headers
+http-server-header
+http-shellshock
+http-sitemap-generator
+http-sql-injection
+http-stored-xss
+http-cookie-flags
+http-cors
+http-csrf
+http-devframework
+http-dombased-xss
+http-enum
+http-fileupload-exploiter
+http-headers
+http-methods
+http-put
+http-rfi-spider
+http-robots.txt

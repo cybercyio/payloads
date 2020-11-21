@@ -1,0 +1,27 @@
+google.com
+site:nytimes.com -site:www.nytimes.com
+(site:nytimes.com -site:www.nytimes.com) AND (inurl:login)
+(site:nytimes.com -site:www.nytimes.com) AND (inurl:login) OR inurl:signup)
+inurl:"phpmyadmin/index.php" AND intitle:"phpMyAdmin 2.11"
+intitle:SQLiteManager inurl:/sqlite/ intext:"Welcome to"
+intitle:"index of" AND inurl:ftp
+
+Advanced Google Search Operators:
+inurl
+allinurl
+intext
+allintext
+intitle
+allintitle
+site
+source
+filetype
+related
+define
+""
+-
+*
+()
+AND
+OR
+#..#

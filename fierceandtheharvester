@@ -1,0 +1,5 @@
+fierce -h
+fierce -dns google.com -threads 10 -file /root/Desktop/googleInfo.txt
+
+theharvester
+theharvester -d google.com -b bing -l 500 -f /root/Desktop/googleInfo.html
